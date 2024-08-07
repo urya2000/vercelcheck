@@ -10,6 +10,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use("/api", router);
 
+
+app.get('/',(req,res)=>{
+  res.send("hello surya")
+})
+
 //mongoose db connection
 mongoose
   .connect(
