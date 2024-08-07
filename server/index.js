@@ -1,28 +1,32 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const app = express();
-const PORT = 7000;
-const router = require("./Router");
 const cors = require("cors");
+const router = require("./Router");
+
+const app = express();
+const PORT = process.env.PORT || 7000;
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use("/api", router);
 
+app.get("/", (req, res) => {
+  res.send("Hello Surya");
+});
 
-app.get('/',(req,res)=>{
-  res.send("hello surya")
-})
-
-//mongoose db connection
+// MongoDB connection
 mongoose
   .connect(
-    "mongodb+srv://suryaprakashmessi99:EM5VG2DlE3nNyHSf@cluster0.wacflvo.mongodb.net/crudMern"
+    "mongodb+srv://suryaprakashmessi99:EM5VG2DlE3nNyHSf@cluster0.wacflvo.mongodb.net/crudMern",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
   )
-  .then(() => console.log("database connection success"))
-  .catch((err) => console.log("db not connected :" + err));
+  .then(() => console.log("Database connection success"))
+  .catch((err) => console.log("Database connection error: " + err));
 
 app.listen(PORT, () => {
-  console.log(`the port is running on ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
